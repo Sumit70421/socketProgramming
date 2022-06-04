@@ -6,7 +6,11 @@
 //this is useful when we have to make lot of requests to the server
 //the extra time of setting up the connection and closing down is saved
 
-const io = require('socket.io')(3000)
+const io = require('socket.io')(3000,{
+    cors:{
+        origin: '*'
+    }
+})
 
 io.on('connection',(socketId)=>{
     console.log("Someone connected with userId ",socketId);
@@ -17,3 +21,8 @@ io.on('connection',(socketId)=>{
 // already been added. Multiple calls passing the same combination of eventNameand
 // listener will result in the listener being added, and called, 
 //multiple times.
+
+//Even after the connection there will be something blocking the connection
+//That something is CORS policy 
+//To get rid of that we specify where our client will come from in
+// in the importing section
