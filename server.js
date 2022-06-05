@@ -11,10 +11,14 @@ const io = require('socket.io')(3000,{
         origin: '*'
     }
 })
-
-io.on('connection',(socketId)=>{
-    console.log("Someone connected with userId ",socketId);
+var ma;
+io.on('connection',(socket)=>{
+    console.log("Someone connected with userId ",socket.id);
+    socket.on("send-message",(message)=>{
+        socket.broadcast.emit("received-message","Other: "+message) //broadcasting means sending to all other sockets except self
+    })
 })
+
 //each time new user comes it will give a socket instance to the new connectino
 //Adds the listener function to the end of the listeners array for the 
 //event named eventName. No checks are made to see if the listener has
